@@ -197,9 +197,15 @@
     <div class="tabs">
       <button class="tab-button active" onclick="switchTab('get-methods')">📋 GET Ticket Data</button>
       <button class="tab-button" onclick="switchTab('set-methods')">✏️ SET Ticket Data</button>
+      <button class="tab-button" onclick="switchTab('context')">🧭 Context API</button>
+      <button class="tab-button" onclick="switchTab('metadata')">🪪 Metadata API</button>
+      <button class="tab-button" onclick="switchTab('database')">🗄️ Database API</button>
       <button class="tab-button" onclick="switchTab('events')">🎯 Events</button>
       <button class="tab-button" onclick="switchTab('trigger')">🚀 Trigger</button>
       <button class="tab-button" onclick="switchTab('invoke')">🔧 Invoke</button>
+      <button class="tab-button" onclick="switchTab('request')">📡 Request API</button>
+      <button class="tab-button" onclick="switchTab('settings')">⚙️ Settings API</button>
+      <button class="tab-button" onclick="switchTab('logs')">📊 Logs</button>
     </div>
 
     <!-- GET Methods -->
@@ -233,7 +239,6 @@
           <label style="display: block; font-size: 11px; color: #333; margin-bottom: 4px;">Priority:</label>
           <input type="text" id="priority-val" placeholder="e.g., High" value="High">
         </div>
-        <textarea id="description-val" placeholder="Enter ticket description...">Updated ticket description</textarea>
       </div>
 
       <div class="test-grid">
@@ -243,6 +248,83 @@
 
       <h3>📊 SET Output</h3>
       <div id="set-log" class="output"></div>
+    </div>
+
+    <!-- Context API -->
+    <div id="context" class="tab-content">
+      <h3>🧭 Context API Tests</h3>
+      <p>Click buttons to retrieve context values directly by path</p>
+
+      <div class="test-grid">
+        <button onclick="getContextData('orgId')">Get orgId</button>
+        <button onclick="getContextData('brandId')">Get brandId</button>
+        <button onclick="getContextData('user')">Get user</button>
+        <button onclick="getContextData('userEmail')">Get context Email</button>
+        <button onclick="getContextData('userName')">Get context.user.name</button>
+        <button onclick="getContextData('userDisplayName')">Get User Display Name</button>
+        <button onclick="getContextData('userLanguage')">Get User Language</button>
+        <button onclick="getContextData('userTimezone')">Get User Timezone</button>
+      </div>
+
+      <h3>📊 Context Output</h3>
+      <div id="context-log" class="output"></div>
+    </div>
+
+    <!-- Metadata API -->
+    <div id="metadata" class="tab-content">
+      <h3>🪪 Metadata API Tests</h3>
+      <p>Click buttons to retrieve metadata values directly by path</p>
+
+      <div class="test-grid">
+        <button onclick="getMetadataData('appId')">Get appId</button>
+        <button onclick="getMetadataData('installationId')">Get installationId</button>
+        <button onclick="getMetadataData('appName')">Get appName</button>
+        <button onclick="getMetadataData('version')">Get version</button>
+        <button onclick="getMetadataData('locations')">Get locations</button>
+        <button onclick="getMetadataData('hasAllBrandAccess')">Get hasAllBrandAccess</button>
+        <button onclick="getMetadataData('hasReadAccess')">Get hasReadAccess</button>
+        <button onclick="getMetadataData('hasWriteAccess')">Get hasWriteAccess</button>
+        <button onclick="getMetadataData('isActive')">Get isActive</button>
+        <button onclick="getMetadataData('isEnabled')">Get isEnabled</button>
+        <button onclick="getMetadataData()">Get All Metadata</button>
+      </div>
+
+      <h3>📊 Metadata Output</h3>
+      <div id="metadata-log" class="output"></div>
+    </div>
+
+    <!-- Database API -->
+    <div id="database" class="tab-content">
+      <h3>🗄️ Database API Tests</h3>
+      <p>Test custom data storage using the Database API - Store notes per ticket with get, set, update, and delete operations.</p>
+      
+      <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-left: 3px solid #667eea; border-radius: 4px;">
+        <h4 style="color: #667eea; margin-bottom: 10px;">🔑 Database Key Configuration</h4>
+        <p style="color: #666; font-size: 12px; margin-bottom: 10px;">Format: <strong>ticketId</strong></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <div>
+            <label style="color: #333; font-weight: 500; font-size: 12px;">Ticket ID:</label>
+            <input id="db-ticketId" type="text" value="ticket-001" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+          </div>
+        </div>
+        <div>
+          <label style="color: #333; font-weight: 500; font-size: 12px;">Notes:</label>
+          <textarea id="db-noteContent" placeholder="Enter your notes here..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; font-family: 'Monaco', monospace; min-height: 100px; resize: vertical;"></textarea>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="color: #764ba2; margin-bottom: 10px;">💾 Database Operations</h4>
+        <div class="test-grid">
+          <button onclick="testDBSet()">💾 Save Notes</button>
+          <button onclick="testDBGet()">📂 Load Notes</button>
+          <button onclick="testDBUpdate()">🔄 Update Notes</button>
+          <button onclick="testDBDelete()">🗑️ Delete Notes</button>
+        </div>
+      </div>
+
+      <h3>📊 Test Output</h3>
+      <div id="database-log" class="output"></div>
     </div>
 
     <!-- Events -->
@@ -395,6 +477,83 @@
 
       <h3>📊 Invoke Output</h3>
       <div id="invoke-log" class="output"></div>
+    </div>
+    
+    <!-- Request API -->
+    <div id="request" class="tab-content">
+      <h3>📡 Request API Tests</h3>
+      <p>Click buttons to make HTTP requests using hardcoded values</p>
+      
+      <div style="margin-bottom: 20px;">
+        <h4 style="color: #764ba2; margin-bottom: 10px;">🎟️ BoldDesk API</h4>
+        <div class="test-grid">
+          <button onclick="createBoldDeskTicket()">✉️ Create Ticket</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-left: 3px solid #667eea; border-radius: 4px;">
+        <h4 style="color: #667eea; margin-bottom: 10px;">🔒 Internal API</h4>
+        <p style="color: #666; font-size: 12px; margin-bottom: 10px;">Enter a ticket ID to call the internal tickets API with GET.</p>
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;">
+          <input id="internalTicketId" type="text" value="153678" placeholder="Enter ticket ID" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+          <button onclick="getInternalTicketDetails()" style="padding: 10px 20px;">GET Internal Ticket</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="color: #764ba2; margin-bottom: 10px;">🔗 Pipedrive API</h4>
+        <div class="test-grid">
+          <button onclick="getPipedrivePerson()">👤 Get Person Fields</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="color: #764ba2; margin-bottom: 10px;">🔧 Jira API</h4>
+        <div class="test-grid">
+          <button onclick="getJiraStatus()">📊 Get Status</button>
+        </div>
+      </div>
+
+      <div class="test-grid">
+        <button onclick="clearRequestLogs()">🗑️ Clear Logs</button>
+      </div>
+
+      <h3>📊 Request Output</h3>
+      <div id="request-log" class="output"></div>
+    </div>
+
+    <!-- Settings API -->
+    <div id="settings" class="tab-content">
+      <h3>⚙️ Settings API Tests</h3>
+      <p>Test retrieving application settings.</p>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="color: #764ba2; margin-bottom: 10px;">🔧 Settings Operations</h4>
+        <div class="test-grid">
+          <button onclick="testSettingGetAll()">📋 Get All Settings</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-left: 3px solid #667eea; border-radius: 4px;">
+        <h4 style="color: #667eea; margin-bottom: 10px;">📝 Setting Key Input</h4>
+        <p style="color: #666; font-size: 12px; margin-bottom: 10px;">Enter a setting key to retrieve its value:</p>
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
+          <input id="settingKey" type="text" placeholder="e.g., bolddeskApiKey, username, password" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+          <button onclick="testSettingGetCustom()" style="padding: 10px 20px;">Get Setting</button>
+        </div>
+      </div>
+
+      <h3>📊 Settings Output</h3>
+      <div id="settings-log" class="output"></div>
+    </div>
+
+    <!-- Logs -->
+    <div id="logs" class="tab-content">
+      <h3>📊 Combined Logs</h3>
+      <div style="margin-bottom: 10px;">
+        <button onclick="clearAllLogs()">🗑️ Clear All Logs</button>
+      </div>
+      <div id="combined-log" class="output" style="min-height: 300px;"></div>
     </div>
   </div>
 
